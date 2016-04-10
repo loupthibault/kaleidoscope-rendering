@@ -1,0 +1,25 @@
+{
+  "name": "kaleidoscope-rendering",
+  "version": "1.0.0",
+  "description": "Kaleidoscope rendering via canvas",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loupthibault/kaleidoscope-rendering.git"
+  },
+  "author": {
+    "name": "Loup THIBAULT",
+    "email": "loupthibault@gmail.com",
+    "url": "https://github.com/loupthibault"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loupthibault/kaleidoscope-rendering/issues"
+  },
+  "homepage": "https://github.com/loupthibault/kaleidoscope-rendering#readme"
+}
