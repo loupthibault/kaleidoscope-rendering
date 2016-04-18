@@ -84,3 +84,8 @@ Every mask can have multiple options.
 | rotate  | float | 0 | The rotation to apply in degrees. |
 | scale | float | 1 | The scale to apply. |
 | delta | object | {x:0, y:0} | The translation to apply.
+
+
+## License
+
+MIT, see [LICENSE.md](https://github.com/loupthibault/kaleidoscope-rendering/blob/master/LICENSE).
