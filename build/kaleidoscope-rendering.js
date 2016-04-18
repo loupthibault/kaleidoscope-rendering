@@ -15,7 +15,7 @@ var Kaleidoscope = function () {
 
   /**
    * kaleidoscope.
-   * @param {Object} settings The PrismSlider settings.
+   * @param {Object} settings
    * @constructor
    */
 
@@ -24,7 +24,6 @@ var Kaleidoscope = function () {
 
     _classCallCheck(this, Kaleidoscope);
 
-    // grab params
     this._canvas = opts.canvas || document.createElement('canvas');
     this._size = opts.size || {
       w: document.documentElement.clientWidth || window.innerWidth,
@@ -45,12 +44,17 @@ var Kaleidoscope = function () {
 
   //-------------------------------------------- public methods
 
+  /**
+   * Get the canvas element
+   */
+
+
   _createClass(Kaleidoscope, [{
     key: 'isReady',
 
 
     /**
-     * Kaleidoscope ready or not
+     * Return if Kaleidoscope is ready or not
      * @return {Boolean}
      */
     value: function isReady() {
@@ -81,9 +85,18 @@ var Kaleidoscope = function () {
       this._size.y = height;
       this._resize();
     }
+
+    /**
+     * Render the Kaleidoscope
+     * @param  {Object} mask settings
+     */
+
   }, {
     key: 'addMask',
-    value: function addMask() {}
+    value: function addMask(settings) {
+      this._masks.push(setting);
+      if (this._lnLoadedMasks) load();
+    }
 
     /**
      * Render the Kaleidoscope
@@ -101,12 +114,13 @@ var Kaleidoscope = function () {
     }
 
     /**
-     * dispose the Kaleidoscope
+     * Dispose the Kaleidoscope
      */
 
   }, {
     key: 'dispose',
     value: function dispose() {}
+    // TODO dispose
 
     //-------------------------------------------- events
 
@@ -193,6 +207,7 @@ var Kaleidoscope = function () {
     value: function _applyEffects(pMaskEffects) {
       if (pMaskEffects.flip) this._flip(pMaskEffects.flip);
       if (pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
+      if (pMaskEffects.delta) this._delta(pMaskEffects.delta);
       if (pMaskEffects.scale !== 1) this._scale(pMaskEffects.scale);
     }
   }, {
@@ -220,6 +235,11 @@ var Kaleidoscope = function () {
       this._tmpContext.translate(-this._size.w / 2, -this._size.h / 2);
     }
   }, {
+    key: '_delta',
+    value: function _delta(pValue) {
+      this._tmpContext.translate(pValue.x, pValue.y);
+    }
+  }, {
     key: '_scale',
     value: function _scale(pValue) {
       this._tmpContext.translate((this._size.w - this._size.w * pValue) / 2, (this._size.h - this._size.h * pValue) / 2);
@@ -236,6 +256,9 @@ var Kaleidoscope = function () {
       this._tmpCanvas.width = this._size.w;
       this._tmpCanvas.height = this._size.h;
       this._sourceRect = this._getSourceRect();
+
+      this._canvas.style.width = this._size.w + 'px';
+      this._canvas.style.height = this._size.h + 'px';
     }
   }, {
     key: '_getSourceRect',
@@ -243,7 +266,7 @@ var Kaleidoscope = function () {
 
       var ww, hh;
 
-      if (this._sourceToDraw instanceof HTMLCanvasElement || this._sourceToDraw instanceof HTMLImageElement) {
+      if (this._sourceToDraw instanceof HTMLCanvasElement || this._sourceToDraw instanceof HTMLImageElement || this._sourceToDraw instanceof Image) {
         ww = this._sourceToDraw.width;
         hh = this._sourceToDraw.height;
       } else if (this._sourceToDraw instanceof HTMLVideoElement) {
