@@ -30,7 +30,7 @@ export default class Kaleidoscope {
   //-------------------------------------------- public methods
 
   /**
-   * Get the canvas element
+   * Get the HTMLCanvasElement element
    */
   get el() { return this._canvas; }
 
@@ -90,7 +90,23 @@ export default class Kaleidoscope {
    * Dispose the Kaleidoscope
    */
   dispose() {
-    // TODO dispose
+    if(this._masks) {
+      while(this._masks.length){
+        var m = this._masks.shif();
+        m.img && m.img.onload = null;
+        m.img = null;
+        m = null;
+      }
+    }
+
+    if(this._canvas && this._canvas.parentNode)
+      this._canvas.parentNode.removeChild(this._canvas);
+
+    this._masks = null;
+    this._context = null;
+    this._tmpContext = null;
+    this._canvas = null;
+    this._tmpCanvas = null;
   }
 
   //-------------------------------------------- events
@@ -126,6 +142,7 @@ export default class Kaleidoscope {
     const img = new Image();
     img.onload = this._onMaskLoaded.bind(this);
     img.src = mask.src;
+    mask.img = img;
   }
 
   //-------------------------- draw
@@ -253,5 +270,4 @@ export default class Kaleidoscope {
       height: hh
     }
   }
-
 }
