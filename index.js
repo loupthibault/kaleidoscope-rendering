@@ -5,14 +5,17 @@ export default class Kaleidoscope {
 
   /**
    * kaleidoscope.
-   * @param {Object} settings The PrismSlider settings.
+   * @param {Object} settings
    * @constructor
    */
   constructor(opts={}) {
 
     // grab params
     this._canvas = opts.canvas || document.createElement('canvas');
-    this._size = opts.size || {w:window.innerWidth, h:window.innerHeight};
+    this._size = opts.size || {
+      w:document.documentElement.clientWidth || window.innerWidth,
+      h:document.documentElement.clientHeight || window.innerHeight
+    };
     this._masks = opts.masks;
     this._sourceToDraw = opts.source;
 
@@ -55,6 +58,10 @@ export default class Kaleidoscope {
     this._size.x = width;
     this._size.y = height;
     this._resize();
+  }
+
+  addMask() {
+
   }
 
   /**
