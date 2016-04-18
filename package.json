@@ -24,7 +24,9 @@
   "scripts": {
     "bundle": "browserify -v -t babelify index.js -o build/kaleidoscope-rendering.js",
     "uglify": "uglifyjs build/kaleidoscope-rendering.js -cm > build/kaleidoscope-rendering.min.js",
-    "build": "npm run bundle && npm run uglify"
+    "build": "npm run bundle && npm run uglify",
+
+    "demo-video": "watchify -v -t babelify demos/video/index.js -o demos/video/build.js"
   },
   "repository": {
     "type": "git",
