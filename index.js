@@ -16,6 +16,7 @@ export default class Kaleidoscope {
     };
     this._masks = opts.masks;
     this._sourceToDraw = opts.source;
+    this._bDrawSource = opts.drawSource === false ? false : true;
 
     this._lnLoadedMasks = 0;
     this._lnMasks = this._masks.length;
@@ -77,12 +78,13 @@ export default class Kaleidoscope {
     if(!this.isReady())return;
     this._context.clearRect(0, 0, this._size.w, this._size.h);
 
-    this._context.drawImage(this._sourceToDraw,
-      this._sourceRect.x,
-      this._sourceRect.y,
-      this._sourceRect.width,
-      this._sourceRect.height);
-
+    if(this._bDrawSource) {
+      this._context.drawImage(this._sourceToDraw,
+        this._sourceRect.x,
+        this._sourceRect.y,
+        this._sourceRect.width,
+        this._sourceRect.height);
+      }
     this._drawMasks();
   }
 
@@ -93,7 +95,7 @@ export default class Kaleidoscope {
     if(this._masks) {
       while(this._masks.length){
         var m = this._masks.shif();
-        m.img && m.img.onload = null;
+        m.img && (m.img.onload = null);
         m.img = null;
         m = null;
       }
@@ -188,8 +190,8 @@ export default class Kaleidoscope {
 
   _applyEffects(pMaskEffects) {
     if(pMaskEffects.flip) this._flip(pMaskEffects.flip);
-    if(pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
     if(pMaskEffects.delta) this._delta(pMaskEffects.delta);
+    if(pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
     if(pMaskEffects.scale !== 1) this._scale(pMaskEffects.scale);
   }
 
