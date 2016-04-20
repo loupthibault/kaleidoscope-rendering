@@ -7,34 +7,77 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var scale = 1;
+
 var settings = {
   canvas: document.querySelector('canvas'),
   source: document.querySelector('video'),
-  size: { w: 640, h: 360 },
+  size: { w: 1200, h: 960 },
   preload: true,
+  drawSource: true,
   masks: [{
-    src: 'demos/images/masks/kalei-a.svg',
+    src: 'demos/images/kalei/kalei-a.svg',
     effects: {
-      flip: false,
       rotate: 0,
-      scale: 1.5,
-      delta: { x: 50, y: 0 }
+      scale: scale
     }
   }, {
-    src: 'demos/images/masks/kalei-b.svg',
+    src: 'demos/images/kalei/kalei-b.svg',
     effects: {
-      flip: false,
-      rotate: 30,
-      scale: 1.5,
-      delta: { x: -50, y: 20 }
+      rotate: 60,
+      scale: scale
     }
   }, {
-    src: 'demos/images/masks/kalei-c.svg',
+    src: 'demos/images/kalei/kalei-c.svg',
     effects: {
-      flip: 'X',
-      rotate: 0,
-      scale: 1.3,
-      delta: { x: 0, y: 50 }
+      rotate: 120,
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-d.svg',
+    effects: {
+      flip: 'Y',
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-e.svg',
+    effects: {
+      rotate: 240,
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-f.svg',
+    effects: {
+      rotate: 300,
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-g.svg',
+    effects: {
+      rotate: 120,
+      delta: { x: -600, y: -480 },
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-h.svg',
+    effects: {
+      rotate: 60,
+      delta: { x: -600, y: 480 },
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-i.svg',
+    effects: {
+      rotate: 240,
+      delta: { x: 600, y: -480 },
+      scale: scale
+    }
+  }, {
+    src: 'demos/images/kalei/kalei-j.svg',
+    effects: {
+      rotate: 300,
+      delta: { x: 600, y: 480 },
+      scale: scale
     }
   }]
 };
@@ -80,6 +123,7 @@ var Kaleidoscope = function () {
     };
     this._masks = opts.masks;
     this._sourceToDraw = opts.source;
+    this._bDrawSource = opts.drawSource === false ? false : true;
 
     this._lnLoadedMasks = 0;
     this._lnMasks = this._masks.length;
@@ -94,7 +138,7 @@ var Kaleidoscope = function () {
   //-------------------------------------------- public methods
 
   /**
-   * Get the canvas element
+   * Get the HTMLCanvasElement element
    */
 
 
@@ -157,8 +201,9 @@ var Kaleidoscope = function () {
       if (!this.isReady()) return;
       this._context.clearRect(0, 0, this._size.w, this._size.h);
 
-      this._context.drawImage(this._sourceToDraw, this._sourceRect.x, this._sourceRect.y, this._sourceRect.width, this._sourceRect.height);
-
+      if (this._bDrawSource) {
+        this._context.drawImage(this._sourceToDraw, this._sourceRect.x, this._sourceRect.y, this._sourceRect.width, this._sourceRect.height);
+      }
       this._drawMasks();
     }
 
@@ -168,8 +213,24 @@ var Kaleidoscope = function () {
 
   }, {
     key: 'dispose',
-    value: function dispose() {}
-    // TODO dispose
+    value: function dispose() {
+      if (this._masks) {
+        while (this._masks.length) {
+          var m = this._masks.shif();
+          m.img && (m.img.onload = null);
+          m.img = null;
+          m = null;
+        }
+      }
+
+      if (this._canvas && this._canvas.parentNode) this._canvas.parentNode.removeChild(this._canvas);
+
+      this._masks = null;
+      this._context = null;
+      this._tmpContext = null;
+      this._canvas = null;
+      this._tmpCanvas = null;
+    }
 
     //-------------------------------------------- events
 
@@ -208,6 +269,7 @@ var Kaleidoscope = function () {
       var img = new Image();
       img.onload = this._onMaskLoaded.bind(this);
       img.src = mask.src;
+      mask.img = img;
     }
 
     //-------------------------- draw
@@ -255,8 +317,8 @@ var Kaleidoscope = function () {
     key: '_applyEffects',
     value: function _applyEffects(pMaskEffects) {
       if (pMaskEffects.flip) this._flip(pMaskEffects.flip);
-      if (pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
       if (pMaskEffects.delta) this._delta(pMaskEffects.delta);
+      if (pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
       if (pMaskEffects.scale !== 1) this._scale(pMaskEffects.scale);
     }
   }, {
