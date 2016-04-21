@@ -14,15 +14,14 @@ export default class Kaleidoscope {
       w:document.documentElement.clientWidth || window.innerWidth,
       h:document.documentElement.clientHeight || window.innerHeight
     };
+
     this._masks = opts.masks;
-    this._sourceToDraw = opts.source;
     this._bDrawSource = opts.drawSource === false ? false : true;
 
     this._lnLoadedMasks = 0;
     this._lnMasks = this._masks.length;
 
-    this._sourceRect = this._getSourceRect();
-
+    this.setSource(opts.source);
     this._initCanvas();
     this._resize();
     if(opts.preload) this.load();
@@ -63,6 +62,22 @@ export default class Kaleidoscope {
   }
 
   /**
+   * Set the source
+   * @param  {Object} the source to draw
+   */
+  setSource(pSource) {
+    if(pSource === undefined || pSource === null )return;
+
+    if( !(pSource instanceof HTMLCanvasElement ||
+        pSource instanceof HTMLImageElement ||
+        pSource instanceof Image) )
+        throw new Error('Kaleidoscope.setSource() -- source is not in the appropriated format');
+
+    this._sourceToDraw = pSource;
+    this._sourceRect = this._getSourceRect();
+  }
+
+  /**
    * Render the Kaleidoscope
    * @param  {Object} mask settings
    */
@@ -85,6 +100,7 @@ export default class Kaleidoscope {
         this._sourceRect.width,
         this._sourceRect.height);
       }
+
     this._drawMasks();
   }
 
@@ -189,10 +205,10 @@ export default class Kaleidoscope {
   //-------------------------- effects
 
   _applyEffects(pMaskEffects) {
-    if(pMaskEffects.flip) this._flip(pMaskEffects.flip);
     if(pMaskEffects.delta) this._delta(pMaskEffects.delta);
     if(pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
     if(pMaskEffects.scale !== 1) this._scale(pMaskEffects.scale);
+    if(pMaskEffects.flip) this._flip(pMaskEffects.flip);
   }
 
   _flip(pValue) {
@@ -203,6 +219,10 @@ export default class Kaleidoscope {
     if (pValue === 'Y') {
       this._tmpContext.translate(0, this._size.h);
       this._tmpContext.scale(1, -1);
+    }
+    if (pValue === 'XY') {
+      this._tmpContext.translate(this._size.w, this._size.h);
+      this._tmpContext.scale(-1, -1);
     }
   }
 

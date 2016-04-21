@@ -10,20 +10,21 @@
 
     <style media="screen">
       main {
-        max-width: 640px;
+        /*max-width: 640px;*/
+      }
+
+      canvas, img {
+        margin: auto;
+        display: block;
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Kaleidoscope - Video Demo</h1>
+      <main>
+      <h1>Kaleidoscope - Basic Demo</h1>
       <canvas></canvas>
-      <video width="640" height="360" loop muted autoplay>
-        <source src="http://www.html5videoplayer.net/videos/toystory.mp4" type="video/mp4">
-        <source src="http://www.html5videoplayer.net/videos/toystory.webm" type="video/webm">
-        <source src="http://www.html5videoplayer.net/videos/toystory.ogv" type="video/ogg">
-      </video>
+      <img src="demos/images/king.jpg" />
     </main>
-    <script src="demos/video/build.js"></script>
+    <script src="demos/basic/build.js"></script>
   </body>
 </html>

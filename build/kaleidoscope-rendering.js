@@ -29,14 +29,14 @@ var Kaleidoscope = function () {
       w: document.documentElement.clientWidth || window.innerWidth,
       h: document.documentElement.clientHeight || window.innerHeight
     };
+
     this._masks = opts.masks;
-    this._sourceToDraw = opts.source;
+    this._bDrawSource = opts.drawSource === false ? false : true;
 
     this._lnLoadedMasks = 0;
     this._lnMasks = this._masks.length;
 
-    this._sourceRect = this._getSourceRect();
-
+    this.setSource(opts.source);
     this._initCanvas();
     this._resize();
     if (opts.preload) this.load();
@@ -45,7 +45,7 @@ var Kaleidoscope = function () {
   //-------------------------------------------- public methods
 
   /**
-   * Get the canvas element
+   * Get the HTMLCanvasElement element
    */
 
 
@@ -87,6 +87,22 @@ var Kaleidoscope = function () {
     }
 
     /**
+     * Set the source
+     * @param  {Object} the source to draw
+     */
+
+  }, {
+    key: 'setSource',
+    value: function setSource(pSource) {
+      if (pSource === undefined || pSource === null) return;
+
+      if (!(pSource instanceof HTMLCanvasElement || pSource instanceof HTMLImageElement || pSource instanceof Image)) throw new Error('Kaleidoscope.setSource() -- source is not in the appropriated format');
+
+      this._sourceToDraw = pSource;
+      this._sourceRect = this._getSourceRect();
+    }
+
+    /**
      * Render the Kaleidoscope
      * @param  {Object} mask settings
      */
@@ -108,7 +124,9 @@ var Kaleidoscope = function () {
       if (!this.isReady()) return;
       this._context.clearRect(0, 0, this._size.w, this._size.h);
 
-      this._context.drawImage(this._sourceToDraw, this._sourceRect.x, this._sourceRect.y, this._sourceRect.width, this._sourceRect.height);
+      if (this._bDrawSource) {
+        this._context.drawImage(this._sourceToDraw, this._sourceRect.x, this._sourceRect.y, this._sourceRect.width, this._sourceRect.height);
+      }
 
       this._drawMasks();
     }
@@ -119,8 +137,24 @@ var Kaleidoscope = function () {
 
   }, {
     key: 'dispose',
-    value: function dispose() {}
-    // TODO dispose
+    value: function dispose() {
+      if (this._masks) {
+        while (this._masks.length) {
+          var m = this._masks.shif();
+          m.img && (m.img.onload = null);
+          m.img = null;
+          m = null;
+        }
+      }
+
+      if (this._canvas && this._canvas.parentNode) this._canvas.parentNode.removeChild(this._canvas);
+
+      this._masks = null;
+      this._context = null;
+      this._tmpContext = null;
+      this._canvas = null;
+      this._tmpCanvas = null;
+    }
 
     //-------------------------------------------- events
 
@@ -159,6 +193,7 @@ var Kaleidoscope = function () {
       var img = new Image();
       img.onload = this._onMaskLoaded.bind(this);
       img.src = mask.src;
+      mask.img = img;
     }
 
     //-------------------------- draw
@@ -205,10 +240,10 @@ var Kaleidoscope = function () {
   }, {
     key: '_applyEffects',
     value: function _applyEffects(pMaskEffects) {
-      if (pMaskEffects.flip) this._flip(pMaskEffects.flip);
-      if (pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
       if (pMaskEffects.delta) this._delta(pMaskEffects.delta);
+      if (pMaskEffects.rotate !== 0) this._rotate(pMaskEffects.rotate);
       if (pMaskEffects.scale !== 1) this._scale(pMaskEffects.scale);
+      if (pMaskEffects.flip) this._flip(pMaskEffects.flip);
     }
   }, {
     key: '_flip',
@@ -220,6 +255,10 @@ var Kaleidoscope = function () {
       if (pValue === 'Y') {
         this._tmpContext.translate(0, this._size.h);
         this._tmpContext.scale(1, -1);
+      }
+      if (pValue === 'XY') {
+        this._tmpContext.translate(this._size.w, this._size.h);
+        this._tmpContext.scale(-1, -1);
       }
     }
   }, {

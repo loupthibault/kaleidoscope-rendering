@@ -7,106 +7,98 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var width = 640;
-var height = 360;
-var scale = 1.2;
-
 var canvas = document.querySelector('canvas');
-var video = document.querySelector('video');
-
-var canvasVideo = document.createElement('canvas');
-var context = canvasVideo.getContext('2d');
-
-canvasVideo.width = width;
-canvasVideo.height = height;
-
-var settings = {
-  canvas: canvas,
-  source: canvasVideo,
-  size: { w: width, h: height },
-  preload: true,
-  drawSource: false,
-  masks: [{
-    src: 'demos/images/kalei/kalei-a.svg',
-    effects: {
-      flip: 'X',
-      rotate: 0,
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-b.svg',
-    effects: {
-      rotate: 60,
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-c.svg',
-    effects: {
-      flip: 'X',
-      rotate: 120,
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-d.svg',
-    effects: {
-      flip: 'XY',
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-e.svg',
-    effects: {
-      flip: 'X',
-      rotate: 240,
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-f.svg',
-    effects: {
-      rotate: 300,
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-g.svg',
-    effects: {
-      flip: 'X',
-      rotate: 120,
-      delta: { x: -(width >> 1), y: -(height >> 1) },
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-h.svg',
-    effects: {
-      rotate: 60,
-      delta: { x: -(width >> 1), y: height >> 1 },
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-i.svg',
-    effects: {
-      flip: 'X',
-      rotate: 240,
-      delta: { x: width >> 1, y: -(height >> 1) },
-      scale: scale
-    }
-  }, {
-    src: 'demos/images/kalei/kalei-j.svg',
-    effects: {
-      rotate: 300,
-      delta: { x: width >> 1, y: height >> 1 },
-      scale: scale
-    }
-  }]
-};
-
-var ka = new _index2.default(settings);
-
-draw();
+var img = new Image();
+img.onload = draw;
+img.src = "demos/images/king.jpg";
 
 function draw() {
 
-  context.drawImage(video, 0, 0, width, height);
+  var scale = 1;
+  var width = 650;
+  var height = 400;
+
+  var settings = {
+    canvas: canvas,
+    source: img,
+    size: { w: width, h: height },
+    preload: true,
+    drawSource: false,
+    masks: [{
+      src: 'demos/images/kalei/kalei-a.svg',
+      effects: {
+        flip: 'X',
+        rotate: 0,
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-b.svg',
+      effects: {
+        rotate: 60,
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-c.svg',
+      effects: {
+        flip: 'X',
+        rotate: 120,
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-d.svg',
+      effects: {
+        flip: 'XY',
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-e.svg',
+      effects: {
+        flip: 'X',
+        rotate: 240,
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-f.svg',
+      effects: {
+        rotate: 300,
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-g.svg',
+      effects: {
+        flip: 'X',
+        rotate: 120,
+        delta: { x: -(width >> 1), y: -(height >> 1) },
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-h.svg',
+      effects: {
+        rotate: 60,
+        delta: { x: -(width >> 1), y: height >> 1 },
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-i.svg',
+      effects: {
+        flip: 'X',
+        rotate: 240,
+        delta: { x: width >> 1, y: -(height >> 1) },
+        scale: scale
+      }
+    }, {
+      src: 'demos/images/kalei/kalei-j.svg',
+      effects: {
+        rotate: 300,
+        delta: { x: width >> 1, y: height >> 1 },
+        scale: scale
+      }
+    }]
+  };
+
+  var ka = new _index2.default(settings);
   ka.render();
-  requestAnimationFrame(draw);
+  // requestAnimationFrame(draw);
 }
 
 },{"../../index":2}],2:[function(require,module,exports){

@@ -26,6 +26,7 @@
     "uglify": "uglifyjs build/kaleidoscope-rendering.js -cm > build/kaleidoscope-rendering.min.js",
     "build": "npm run bundle && npm run uglify",
 
+    "demo-basic": "watchify -v -t babelify demos/basic/index.js -o demos/basic/build.js",
     "demo-video": "watchify -v -t babelify demos/video/index.js -o demos/video/build.js"
   },
   "repository": {
