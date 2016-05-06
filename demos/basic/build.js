@@ -63,36 +63,6 @@ function draw() {
         rotate: 300,
         scale: scale
       }
-    }, {
-      src: 'demos/images/kalei/kalei-g.svg',
-      effects: {
-        flip: 'X',
-        rotate: 120,
-        delta: { x: -(width >> 1), y: -(height >> 1) },
-        scale: scale
-      }
-    }, {
-      src: 'demos/images/kalei/kalei-h.svg',
-      effects: {
-        rotate: 60,
-        delta: { x: -(width >> 1), y: height >> 1 },
-        scale: scale
-      }
-    }, {
-      src: 'demos/images/kalei/kalei-i.svg',
-      effects: {
-        flip: 'X',
-        rotate: 240,
-        delta: { x: width >> 1, y: -(height >> 1) },
-        scale: scale
-      }
-    }, {
-      src: 'demos/images/kalei/kalei-j.svg',
-      effects: {
-        rotate: 300,
-        delta: { x: width >> 1, y: height >> 1 },
-        scale: scale
-      }
     }]
   };
 
@@ -183,9 +153,9 @@ var Kaleidoscope = function () {
   }, {
     key: 'setSize',
     value: function setSize(width, height) {
-      if (this._size.x === width && this._size.y === height) return;
-      this._size.x = width;
-      this._size.y = height;
+      if (this._size.w === width && this._size.h === height) return;
+      this._size.w = width;
+      this._size.h = height;
       this._resize();
     }
 
@@ -206,15 +176,14 @@ var Kaleidoscope = function () {
     }
 
     /**
-     * Render the Kaleidoscope
-     * @param  {Object} mask settings
+     * Return the masks (usefull to make live modification on the render)
+     * @return  {Array} masks
      */
 
   }, {
-    key: 'addMask',
-    value: function addMask(settings) {
-      this._masks.push(setting);
-      if (this._lnLoadedMasks) load();
+    key: 'getMasks',
+    value: function getMasks() {
+      return this._masks;
     }
 
     /**

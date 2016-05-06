@@ -45,7 +45,7 @@ kal.render();
 |------------|----------|---------|-------------|
 |`canvas`    | HTMLCanvasElement   | 0       | The canvas where to draw. If unset, a HTMLCanvasElement will be created automatically. You can get it via `kaleidoscope.el` |
 |`source`    | Object   | null    | The source to draw and to apply the effect. |
-|`size`      | Object    | the window size       | The canvas's size. It's an object made this way `{width:value, height:value}` |
+|`size`      | Object    | the window size       | The canvas's size. It's an object made this way `{w:value, h:value}` |
 |`masks`     | Array   | null    | An array of all the masks |
 |`preload`     | Boolean   | true    | If set to true, will auto preload each mask images |
 |`drawSource`     | Boolean   | true    | If set to true, will first draw the source. |
@@ -64,9 +64,9 @@ Change the current size of the canvas.
 
 Load all the masks. Will do nothing if everything is ready.
 
-#### `kaleidoscope.addMask(mask)`
+#### `kaleidoscope.getMasks()`
 
-Add a new mask.
+Return the masks (usefull to make live modification on the render)
 
 #### `kaleidoscope.render()`
 

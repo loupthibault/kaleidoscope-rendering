@@ -27,7 +27,8 @@
     "build": "npm run bundle && npm run uglify",
 
     "demo-basic": "watchify -v -t babelify demos/basic/index.js -o demos/basic/build.js",
-    "demo-video": "watchify -v -t babelify demos/video/index.js -o demos/video/build.js"
+    "demo-video": "watchify -v -t babelify demos/video/index.js -o demos/video/build.js",
+    "demo-glass": "watchify -v -t babelify demos/brokenglass/index.js -o demos/brokenglass/build.js"
   },
   "repository": {
     "type": "git",

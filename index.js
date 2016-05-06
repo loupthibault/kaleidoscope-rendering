@@ -55,9 +55,9 @@ export default class Kaleidoscope {
    * @param  {Number} height
    */
   setSize(width, height) {
-    if(this._size.x === width && this._size.y === height)return;
-    this._size.x = width;
-    this._size.y = height;
+    if(this._size.w === width && this._size.h === height)return;
+    this._size.w = width;
+    this._size.h = height;
     this._resize();
   }
 
@@ -78,12 +78,11 @@ export default class Kaleidoscope {
   }
 
   /**
-   * Render the Kaleidoscope
-   * @param  {Object} mask settings
+   * Return the masks (usefull to make live modification on the render)
+   * @return  {Array} masks
    */
-  addMask(settings) {
-    this._masks.push(setting);
-    if( this._lnLoadedMasks) load();
+  getMasks() {
+    return this._masks;
   }
 
   /**
@@ -255,8 +254,8 @@ export default class Kaleidoscope {
     this._tmpCanvas.height = this._size.h;
     this._sourceRect = this._getSourceRect();
 
-    this._canvas.style.width = `${this._size.w}px`
-    this._canvas.style.height = `${this._size.h}px`
+    this._canvas.style.width = `${this._size.w}px`;
+    this._canvas.style.height = `${this._size.h}px`;
   }
 
   _getSourceRect() {

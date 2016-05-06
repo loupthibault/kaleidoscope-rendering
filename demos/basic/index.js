@@ -72,44 +72,6 @@ function draw() {
           scale: scale,
         }
       }
-      ,
-      {
-        src: 'demos/images/kalei/kalei-g.svg',
-        effects: {
-          flip: 'X',
-          rotate: 120,
-          delta: {x:-(width>>1), y:-(height>>1)},
-          scale: scale
-        }
-      }
-      ,
-      {
-        src: 'demos/images/kalei/kalei-h.svg',
-        effects: {
-          rotate: 60,
-          delta: {x:-(width>>1), y:(height>>1)},
-          scale: scale
-        }
-      }
-      ,
-      {
-        src: 'demos/images/kalei/kalei-i.svg',
-        effects: {
-          flip: 'X',
-          rotate: 240,
-          delta: {x:(width>>1), y:-(height>>1)},
-          scale: scale
-        }
-      }
-      ,
-      {
-        src: 'demos/images/kalei/kalei-j.svg',
-        effects: {
-          rotate: 300,
-          delta: {x:(width>>1), y:(height>>1)},
-          scale: scale
-        }
-      }
     ]
   };
 

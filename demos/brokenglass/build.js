@@ -27,84 +27,47 @@ var settings = {
   preload: true,
   drawSource: false,
   masks: [{
-    src: 'demos/images/kalei/kalei-a.svg',
+    src: 'demos/images/glass/broken-glass-a.svg',
     effects: {
-      flip: 'X',
-      rotate: 0,
-      scale: scale
+      scale: 1.1,
+      delta: {
+        x: -10,
+        y: 10
+      }
     }
   }, {
-    src: 'demos/images/kalei/kalei-b.svg',
+    src: 'demos/images/glass/broken-glass-b.svg',
     effects: {
-      rotate: 60,
-      scale: scale
+      scale: 1,
+      delta: {
+        x: -10,
+        y: -5
+      }
     }
   }, {
-    src: 'demos/images/kalei/kalei-c.svg',
+    src: 'demos/images/glass/broken-glass-c.svg',
     effects: {
-      flip: 'X',
-      rotate: 120,
-      scale: scale
+      scale: 1.2,
+      delta: {
+        x: 0,
+        y: -20
+      }
     }
   }, {
-    src: 'demos/images/kalei/kalei-d.svg',
+    src: 'demos/images/glass/broken-glass-d.svg',
     effects: {
-      flip: 'XY',
-      scale: scale
+      scale: 1.15
     }
   }, {
-    src: 'demos/images/kalei/kalei-e.svg',
+    src: 'demos/images/glass/broken-glass-e.svg',
     effects: {
-      flip: 'X',
-      rotate: 240,
-      scale: scale
+      scale: 1.3,
+      delta: {
+        x: -10,
+        y: 20
+      }
     }
-  }, {
-    src: 'demos/images/kalei/kalei-f.svg',
-    effects: {
-      rotate: 300,
-      scale: scale
-    }
-  }
-  // ,
-  // {
-  //   src: 'demos/images/kalei/kalei-g.svg',
-  //   effects: {
-  //     flip: 'X',
-  //     rotate: 120,
-  //     delta: {x:-(width>>1), y:-(height>>1)},
-  //     scale: scale
-  //   }
-  // }
-  // ,
-  // {
-  //   src: 'demos/images/kalei/kalei-h.svg',
-  //   effects: {
-  //     rotate: 60,
-  //     delta: {x:-(width>>1), y:(height>>1)},
-  //     scale: scale
-  //   }
-  // }
-  // ,
-  // {
-  //   src: 'demos/images/kalei/kalei-i.svg',
-  //   effects: {
-  //     flip: 'X',
-  //     rotate: 240,
-  //     delta: {x:(width>>1), y:-(height>>1)},
-  //     scale: scale
-  //   }
-  // }
-  // ,
-  // {
-  //   src: 'demos/images/kalei/kalei-j.svg',
-  //   effects: {
-  //     rotate: 300,
-  //     delta: {x:(width>>1), y:(height>>1)},
-  //     scale: scale
-  //   }
-  // }
-  ]
+  }]
 };
 
 var ka = new _index2.default(settings);
